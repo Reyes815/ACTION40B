@@ -1,29 +1,63 @@
 package sample;
-import java.util.Scanner;
-import java.util.Arrays;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.*;
 
-public final class TestJava {
+public class TestJava {
+    /**
+     * @field sensitiveStuff
+     */
+    private int sensitiveStuff;
+    /**
+     * @field id
+     */
+    private String id = "buh";
 
-    private TestJava() {
-        super();
+    /**
+     * default constructor.
+     */
+    public TestJava() {
     }
 
     /**
-	*
-	* @param args
+     * @param stuff
+     */
+    public TestJava(final int stuff) {
+        this.sensitiveStuff = stuff;
+    }
+
+    /**
+     * @return returns private field
+     */
+    public int getSensitiveStuff() {
+        return sensitiveStuff;
+    }
+
+    /**
+     * @param sensitiveStuff takes in int to modify value
+     */
+    public void setSensitiveStuff(final int sensitiveStuff) {
+        this.sensitiveStuff = sensitiveStuff;
+    }
+
+    /**
+    *@param args
 	*/
 	public static void main(final String[] args) {
 		Scanner takeInp = new Scanner(System.in);
 		boolean flag = true;
-
-		do {
-		    System.out.print("Input the year: ");
-	        int year = takeInp.nextInt();
-	        LeapYear leapyr = new LeapYear(year);
-	        flag = leapyr.isLeapYear();
-	        System.out.println(flag);
-		} while (flag);
-		System.out.println("Exiting Loop");
+		
+//		do {
+//		    System.out.print("Input the year: ");
+//	        int year = takeInp.nextInt();
+//	        LeapYear leapyr = new LeapYear(year);
+//	        flag = leapyr.isLeapYear();
+//	        System.out.println(flag);
+//		} while (flag);
+//		System.out.println("Exiting Loop");
 
 		takeInp.close();
 	}
@@ -84,38 +118,6 @@ public final class TestJava {
 
 
 
-class LeapYear {
-    /**
-     * @field year to be used for checking if leap year
-     */
-    private int year;
 
-    /**
-     * @param currYear to be initialized for leap year class
-     */
-    LeapYear(final int currYear) {
-        this.year = currYear;
-    }
-
-    public int getYear() {
-        return this.year;
-    }
-
-    public boolean isLeapYear() {
-        int currentYear = this.getYear();
-        final int divisibleBy4 = 4;
-        final int divisibleBy100 = 100;
-        final int divisibleBy400 = 400;
-
-        if (currentYear % divisibleBy4 == 0 && currentYear % divisibleBy100 != 0
-                || currentYear % divisibleBy400 == 0) {
-           System.out.println(year + " is a leap year");
-           return true;
-        }
-
-        System.out.println(year + " is not a leap year");
-        return false;
-    }
-}
 
 
