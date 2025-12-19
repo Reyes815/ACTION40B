@@ -28,21 +28,16 @@ public final class BookRentalSystem {
         newBooks.add(new NonFictionBook("Guns, Germs,"
                 + " and Steel", "Jared Diamond ", year1997));
         addBooks(newBooks);
-
         ArrayList<Book> rentBooks = new ArrayList<>();
         rentBooks.add(library.get(0));
-        rentBooks.add(library.get(1));
+        rentBooks.add(library.get(2));
         rentBooks(rentBooks);
-        displayBooks();
-        displayRentedBooks();
         newBooks.add(null);
-        ArrayList<Book> newList = getLibrary();
-        int size = getLibrarySize();
         clearLibrary();
-
+        // Comment: Actual output does not follow expected output.
     }
     /**
-     *
+     * public method for adding a specific book.
      * @param book adds new book using public method
      */
     public static void add(final Book book) {
@@ -59,21 +54,22 @@ public final class BookRentalSystem {
         return library.get(index);
     }
     /**
-     *
-     * @param newBooks
+     * adds books to the library.
+     * @param newBooks take in Book ArrayList to add to library
      */
     public static void addBooks(final ArrayList<Book> newBooks) {
         // TODO Auto-generated method stub
         for (Book book : newBooks) {
+            book.getInfo();
             library.add(book);
         }
     }
     /**
-     *
-     * @param rentedBooks
+     * rents out books from the library.
+     * @param rentedBooks take in Book ArrayList to rent out
      */
     public static void rentBooks(final ArrayList<Book> rentedBooks) {
-        System.out.println("Books Rented:");
+        System.out.println("Books rented:");
         for (Book book : rentedBooks) {
             if (book.isRented()) {
                 continue;
@@ -83,20 +79,20 @@ public final class BookRentalSystem {
         }
     }
     /**
-     *
+     * clears the ArrayList.
      */
     public static void clearLibrary() {
         library.clear();
     }
     /**
-     *
+     * getter for library size.
      * @return library.size()
      */
     public static int getLibrarySize() {
         return library.size();
     }
     /**
-    *
+    * getter for private library.
     * @return library
     */
    public static ArrayList<Book> getLibrary() {
@@ -104,9 +100,11 @@ public final class BookRentalSystem {
    }
     /**
      * display rented books.
+     * @param rentedBooks arraylist
      */
-    public static void displayRentedBooks() {
-        for (Book book : getLibrary()) {
+    public static void displayRentedBooks(final ArrayList<Book> rentedBooks) {
+        System.out.println("Books rented:");
+        for (Book book : rentedBooks) {
             if (book.isRented()) {
                 book.getInfo();
             }

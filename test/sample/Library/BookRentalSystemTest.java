@@ -115,8 +115,10 @@ class BookRentalSystemTest {
         BookRentalSystem.add(new NonFictionBook("The Tipping Point",
                 "M. Gladwell", 2000));
         BookRentalSystem.displayBooks();
-        String expectedOutput = "The Lord of the Rings J.R.R. Tolkien 1954"
-        + "The Tipping Point M. Gladwell 2000";
+        String expectedOutput =
+                "The Lord of the Rings J.R.R. Tolkien 1954"
+                + System.lineSeparator()
+                + "The Tipping Point M. Gladwell 2000";
         String actualOutput = outContent.toString().trim();
 
         assertEquals(expectedOutput,
@@ -132,8 +134,11 @@ class BookRentalSystemTest {
         BookRentalSystem.add(new NonFictionBook("The Tipping Point",
                 "M. Gladwell", 2000));
         BookRentalSystem.get(0).rent();
-        BookRentalSystem.displayRentedBooks();
-        String expectedOutput = "The Lord of the Rings J.R.R. Tolkien 1954";
+        BookRentalSystem.displayRentedBooks(BookRentalSystem.getLibrary());
+        String expectedOutput =
+                "Books rented:"
+                + System.lineSeparator()
+                + "The Lord of the Rings J.R.R. Tolkien 1954";
         String actualOutput = outContent.toString().trim();
 
         assertEquals(expectedOutput,

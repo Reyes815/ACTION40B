@@ -97,7 +97,7 @@ public class Book {
      * prints out book information.
      */
     public void getInfo() {
-        System.out.print(this.title + " "
+        System.out.println(this.title + " "
     + this.author + " " + this.yearPublished);
     }
 }
