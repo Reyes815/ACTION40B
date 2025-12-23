@@ -32,6 +32,7 @@ public class SavingsAccount extends AbstractBankAccount {
         final double negativeDeposit = -500;
         final double zeroDeposit = 0;
         final double newWithdraw = 500;
+        final double secWithdraw = 100;
         final double negativeWithdraw = -100;
         final double overWithdraw = 1500;
         SavingsAccount newAcc = new SavingsAccount("mark");
@@ -46,8 +47,9 @@ public class SavingsAccount extends AbstractBankAccount {
         newAcc.deposit(newDeposit);
         newAcc.withdraw(newWithdraw);
         newAcc.unfreezeAccount();
-        newAcc.withdraw(newWithdraw);
+        newAcc.withdraw(secWithdraw); // Withdraw amount must match with TC#10
         System.out.println(newAcc.isFrozen());
         System.out.println("Balance: Php " + newAcc.getBalance());
+        // Balance amount must match with TC#12
     }
 }
