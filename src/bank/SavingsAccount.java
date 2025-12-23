@@ -35,6 +35,7 @@ public class SavingsAccount extends AbstractBankAccount {
         final double negativeWithdraw = -100;
         final double overWithdraw = 1500;
         SavingsAccount newAcc = new SavingsAccount("mark");
+        System.out.println(newAcc.getOwnerName());
         newAcc.deposit(newDeposit);
         newAcc.deposit(negativeDeposit);
         newAcc.deposit(zeroDeposit);

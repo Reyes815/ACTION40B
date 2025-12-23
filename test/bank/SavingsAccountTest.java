@@ -47,11 +47,14 @@ class SavingsAccountTest {
     @Test
     void testCreateNewAccount_NewAccountTest() {
         SavingsAccount newAcc = new SavingsAccount("test");
+        System.out.println(newAcc.getOwnerName());
         
         String expectedOutput =
-                "Bank Account under: test created.";
+                "Bank Account under: test created."
+                + System.lineSeparator()
+                + "test";
         String actualOutput = outContent.toString().trim();
-
+        
         assertEquals(expectedOutput,
                 actualOutput,  "Output strings should match");
     }
