@@ -1,6 +1,6 @@
 package bank;
 
-public class AbstractBankAccount implements BankAccount {
+public abstract class AbstractBankAccount implements BankAccount {
     /**
      * current balance amount.
      */

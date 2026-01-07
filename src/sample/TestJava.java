@@ -1,122 +1,63 @@
 package sample;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestJava {
-    /**
-     * @field sensitiveStuff
-     */
-    private int sensitiveStuff;
-    /**
-     * @field id
-     */
-    private String id = "buh";
-
-    /**
-     * default constructor.
-     */
-    public TestJava() {
-    }
-
-    /**
-     * @param stuff
-     */
-    public TestJava(final int stuff) {
-        this.sensitiveStuff = stuff;
-    }
-
-    /**
-     * @return returns private field
-     */
-    public int getSensitiveStuff() {
-        return sensitiveStuff;
-    }
-
-    /**
-     * @param sensitiveStuff takes in int to modify value
-     */
-    public void setSensitiveStuff(final int sensitiveStuff) {
-        this.sensitiveStuff = sensitiveStuff;
-    }
 
     /**
     *@param args
 	*/
 	public static void main(final String[] args) {
-		Scanner takeInp = new Scanner(System.in);
 		boolean flag = true;
+		NoneParam buh = () -> {
+		    System.out.println("This is a lambda");
+		};
+		buh.display();
+		Subtract buh2 = (a, b) -> a - b;
+		System.out.print("Difference: ");
+		System.out.println(buh2.subtraction(5, 2));
+		FunctionInter buh3 = (x) -> System.out.println(x*2);
+		buh3.absFunction(4);
+		ArrayList<String> buh4 = new ArrayList<String>();
+		buh4.add("Juan");
+		buh4.add("Viktor");
+		buh4.add("Vicky");
+		buh4.stream()
+		.filter(x -> x.startsWith("V"))
+		.map(x -> x.toUpperCase())
+		.forEach(x -> System.out.print(x + " "));
 		
-//		do {
-//		    System.out.print("Input the year: ");
-//	        int year = takeInp.nextInt();
-//	        LeapYear leapyr = new LeapYear(year);
-//	        flag = leapyr.isLeapYear();
-//	        System.out.println(flag);
-//		} while (flag);
-//		System.out.println("Exiting Loop");
-
-		takeInp.close();
+		List<Animals> buh5 = new ArrayList<Animals>();
+		buh5.add(new Animals("fish", false, true));
+		buh5.add(new Animals("Kangaroo", true, false));
+		buh5.add(new Animals("rabbit", true, false));
+		buh5.add(new Animals("turtle", false, true));
+		System.out.println();
+		print(buh5, new CheckIfHopper());
 	}
-	/**
-	 *
-	 * @param takeInp this is the scanner object to take the user input
-	 * @return returns an integer array to manipulate or print
-	 */
-	public static int[] takeInput(final Scanner takeInp) {
-		System.out.print("Enter Array Size: ");
-		int arraySize = takeInp.nextInt();
-		int[] numArray = new int[arraySize];
-		System.out.println("");
-
-		for (int i = 0; i < arraySize; i++) {
-		    System.out.print("Enter Array Numbers: ");
-		    numArray[i] = takeInp.nextInt();
-		}
-
-		return numArray;
-	}
-
-	/**
-	 *
-	 * @param x will be our number array
-	 * @return returns the smallest number found within the array
-	 */
-	public static int findSmallestNumber(final int[] x) {
-		int z = x[0];
-
-		for (int i = 1; i < x.length; i++) {
-			if (x[i] < z) {
-				z = x[i];
-			}
-		}
-
-		return z;
-	}
-
-	/**
-	 *
-	 * @param x will be our integer array
-	 * @return returns the largest integer found in the array
-	 */
-	public static int findLargestNumber(final int[] x) {
-		int z = x[0];
-
-		for (int i = 1; i < x.length; i++) {
-			if (x[i] > z) {
-				z = x[i];
-			}
-		}
-
-		return z;
+	
+	private static void print(List<Animals> animals, CheckTrait checker) {
+	    animals.forEach(x -> {
+	        if (checker.test(x)) {
+	            System.out.println(x + " ");
+	        }
+	    });
 	}
 
 }
 
+@FunctionalInterface
+interface NoneParam {
+    void display();
+}
 
+interface Subtract {
+    int subtraction(int x, int y);
+}
+
+interface FunctionInter {
+    void absFunction(int x);
+}
 
 
 
