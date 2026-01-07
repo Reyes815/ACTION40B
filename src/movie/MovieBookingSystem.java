@@ -54,6 +54,10 @@ public class MovieBookingSystem extends BookingSystem {
            System.out.println("Time slot does not exist.");
            return;
        }
+       if (newTickets < 0) {
+           System.out.println("Can not enter a negative amount.");
+           return;
+       }
 
        for (int i = 0; i < reservationArray.length; i++) {
            if (reservationArray[i].equals(newTime)) {
@@ -81,10 +85,14 @@ public class MovieBookingSystem extends BookingSystem {
            System.out.println("Time slot does not exist.");
            return;
        }
+       if (newTickets < 0) {
+           System.out.println("Can not enter a negative amount.");
+           return;
+       }
        System.out.println("Do you wish to proceed? [Y][N]");
        String input = sc.next();
 
-       if (!input.equals("Y") && !input.equals("N")) {
+       if (!input.equalsIgnoreCase("Y") && !input.equalsIgnoreCase("N")) {
            System.out.println("Invalid Input");
            return;
        }
@@ -110,7 +118,8 @@ public class MovieBookingSystem extends BookingSystem {
    /**
     * shows the current time slots and their perspective tickets available.
     */
-   public void showTickets() {
+   // Please add a test case in JUnit to cover this function.
+   public void showTimeSlots() {
        System.out.println("Shows and Tickets Available");
        for (int i = 0; i < reservationArray.length; i++) {
            System.out.println(reservationArray[i]
@@ -118,9 +127,11 @@ public class MovieBookingSystem extends BookingSystem {
        }
    }
    /**
-    *
+    * Main Function.
     * @param args
     */
+   // add additional information - e.g. main function
+   // also try to cover main on JUnit
    public static void main(final String[] args) {
        final int validTicket = 5;
        final int invalidTickets = 100;
@@ -128,6 +139,7 @@ public class MovieBookingSystem extends BookingSystem {
        final int validTicket2 = 2;
        final int invalidCancelTickets = 5;
        MovieBookingSystem newSystem = new MovieBookingSystem();
+       newSystem.showTimeSlots();
        newSystem.bookTicket("10:00 AM", validTicket);
        newSystem.bookTicket("10:00 AM", invalidTickets);
        newSystem.cancelReservation("10:00 AM",
@@ -135,6 +147,12 @@ public class MovieBookingSystem extends BookingSystem {
        newSystem.bookTicket("1:00 PM", validTicket2);
        newSystem.cancelReservation("1:00 PM",
                invalidCancelTickets, newSystem.getGlobalScanner());
-       newSystem.showTickets();
+       newSystem.showTimeSlots();
+       // Has Error message although not related to the error
+       // input: -1
+       // error message: Attempt to cancel more tickets than booked
+       newSystem.bookTicket("10:00 AM", -1);
+       newSystem.cancelReservation("1:00 PM",
+               -1, newSystem.getGlobalScanner());
    }
 }

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Scanner;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintStream;
 
 import org.junit.jupiter.api.AfterEach;
@@ -11,12 +12,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class MovieBookingSystemTest {
+    // At least 80% on JUnit coverage
+    
     /**
      * for checking of string output.
      */
     private final ByteArrayOutputStream outContent =
             new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
+    private final InputStream originalIn = System.in;
     MovieBookingSystem newSystem = new MovieBookingSystem();
     final int validTicket = 5;
     final int invalidTickets = 100;
@@ -39,6 +43,7 @@ class MovieBookingSystemTest {
     @AfterEach
     void restoreStream() {
         System.setOut(originalOut);
+        System.setIn(originalIn);
     }
     
     @Test
@@ -143,6 +148,37 @@ class MovieBookingSystemTest {
         
         String expectedOutput =
                 "Time slot does not exist.";
+        String actualOutput = outContent.toString().trim();
+        
+        assertEquals(expectedOutput,
+                actualOutput,  "Output strings should match");
+    }
+    
+    @Test
+    void checkShowTime_ShowsTimeSlots_CurrentShows() {
+        newSystem.showTimeSlots();
+        
+        String expectedOutput = 
+                "Shows and Tickets Available"
+                + System.lineSeparator() +
+                "10:00 AM: 5 tickets available."
+                + System.lineSeparator() +
+                "1:00 PM: 5 tickets available.";
+        String actualOutput = outContent.toString().trim();
+        
+        assertTrue(actualOutput.contains(expectedOutput));
+    }
+    
+    @Test
+    void checkNegative_NegativeInput_ErrorMessage() {
+        Scanner sc = new Scanner(System.in);
+        newSystem.bookTicket("1:00 PM", -2);
+        newSystem.cancelReservation("1:00 PM", -5, sc);
+        
+        String expectedOutput = 
+                "Can not enter a negative amount."
+                + System.lineSeparator() +
+                "Can not enter a negative amount.";
         String actualOutput = outContent.toString().trim();
         
         assertEquals(expectedOutput,

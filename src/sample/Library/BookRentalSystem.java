@@ -58,7 +58,6 @@ public final class BookRentalSystem {
      * @param newBooks take in Book ArrayList to add to library
      */
     public static void addBooks(final ArrayList<Book> newBooks) {
-        // TODO Auto-generated method stub
         for (Book book : newBooks) {
             book.getInfo();
             library.add(book);

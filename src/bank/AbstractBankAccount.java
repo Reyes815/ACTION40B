@@ -33,7 +33,6 @@ public abstract class AbstractBankAccount implements BankAccount {
 
     @Override
     public final void deposit(final double amount) {
-        // TODO Auto-generated method stub
         if (!this.isFrozen) {
             if (amount <= 0) {
                 System.out.println("The deposit amount must be positive");
@@ -49,7 +48,6 @@ public abstract class AbstractBankAccount implements BankAccount {
 
     @Override
     public final void withdraw(final double amount) {
-        // TODO Auto-generated method stub
         if (!this.isFrozen) {
             if (amount <= 0) {
                 System.out.println("The withdrawn amount must be positive.");
@@ -67,13 +65,11 @@ public abstract class AbstractBankAccount implements BankAccount {
 
     @Override
     public final double getBalance() {
-        // TODO Auto-generated method stub
         return this.balance;
     }
 
     @Override
     public final boolean isFrozen() {
-        // TODO Auto-generated method stub
         return this.isFrozen;
     }
 
