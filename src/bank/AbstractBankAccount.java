@@ -15,24 +15,27 @@ public abstract class AbstractBankAccount implements BankAccount {
     /**
      * transaction list.
      */
-    private List<Transaction> transactionHistory = new ArrayList<Transaction>();
+    private List<Transaction> transactionHistory;
 
+    // Add javadoc for constructor
+    /**
+     * Initializes a new BankAccount with zero balance, unfrozen status
+     * and a transaction history for storage.
+     */
     AbstractBankAccount() {
         this.balance = 0;
         this.isFrozen = false;
+        this.transactionHistory = new ArrayList<Transaction>();
+        // Constructor should initialize transactionHistory as an ArrayList
     }
 
-    /**
-     * freezes current bank account.
-     */
-    public void freezeAccount() {
+    @Override
+    public final void freezeAccount() {
         this.isFrozen = true;
         System.out.println("Account has been frozen.");
     }
 
-    /**
-     * set isFrozen to false.
-     */
+    @Override
     public final void unfreezeAccount() {
         this.isFrozen = false;
         System.out.println("Account has been unfrozen.");
@@ -62,6 +65,7 @@ public abstract class AbstractBankAccount implements BankAccount {
     @Override
     public final void withdraw(final double amount) {
         if (!this.isFrozen) {
+            // Please cover if statement in JUnit
             if (amount == 0) {
                 throw new InvalidAmountException(
                         "Withdraw with zero amount.");

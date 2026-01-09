@@ -41,10 +41,13 @@ public class BankAccountManager {
         return this.accounts.get(accountID);
     }
     /**
-     * prints out the list of all accounts.
+     * prints out the list of all accounts with their user ID and account.
      */
+    // cover in JUnit
     public void listAccounts() {
-        accounts.values().forEach(System.out::println);
+        accounts.forEach((userID, userAcc) -> {
+            System.out.println("ID: " + userID + " User: " + userAcc);
+        });
     }
     /**
      * Returns all transactions with amounts greater than amount given.
@@ -54,9 +57,18 @@ public class BankAccountManager {
      */
     public List<Transaction> filterTransactionsAbove(
             final double amount, final List<Transaction> txList) {
-                return txList.stream()
-                        .filter(x -> x.getAmount() >= amount)
-                        .collect(Collectors.toList());
+        if (amount == 0) {
+            throw new InvalidAmountException(
+                    "Cannot use 0 as an amount.");
+        }
+        if (amount < 0) {
+            throw new InvalidAmountException(
+                    "Cannot use a negative amount.");
+        }
+
+        return txList.stream()
+                .filter(x -> x.getAmount() >= amount)
+                .collect(Collectors.toList());
     }
     /**
      * Compares the values of Transactions

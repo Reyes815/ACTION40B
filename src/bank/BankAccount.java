@@ -29,4 +29,14 @@ public interface BankAccount {
      */
     List<Transaction> getTransactionHistory();
 
+    // Please add freezeAccount and unfreezeAccount in Interface based on specs
+    /**
+     * freezes current bank account to stop any bank operations.
+     */
+    void freezeAccount();
+
+    /**
+     * Unfreezes current bank account to enable operations.
+     */
+    void unfreezeAccount();
 }

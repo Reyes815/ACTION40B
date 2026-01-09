@@ -18,6 +18,7 @@ public class SavingsAccount extends AbstractBankAccount {
     /**
      * @return ownerName gets the current bank account owners name.
      */
+    // Cover in JUnit
     public String getOwnerName() {
         return ownerName;
     }

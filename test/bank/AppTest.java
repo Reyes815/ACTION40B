@@ -14,7 +14,7 @@ class AppTest {
     private final ByteArrayOutputStream outContent =
             new ByteArrayOutputStream();
     SavingsAccount newAcc = new SavingsAccount("mark");
-    BankAccountManager kenSama = new BankAccountManager();
+    BankAccountManager manager = new BankAccountManager();
     
     @BeforeEach
     void setup() {
@@ -26,10 +26,19 @@ class AppTest {
     
     @Test
     void checkAccount_DisplayAccountIDWithBalane_ValidMessage() {
-        kenSama.addAccount(newAcc); //tc1
+        manager.addAccount(newAcc); //tc1
         
         String expectedOutput =
                 "Account ID: 1 Balance: 0.0";
+        String actualOutput = outContent.toString().trim();
+        assertTrue(actualOutput.contains(expectedOutput));
+    }
+    
+    @Test
+    void checkOwner_CallGetOwnerNameFunction_ValidMessage() {
+        System.out.println(newAcc.getOwnerName());
+        
+        String expectedOutput = "mark";
         String actualOutput = outContent.toString().trim();
         assertTrue(actualOutput.contains(expectedOutput));
     }
@@ -150,15 +159,43 @@ class AppTest {
         newAcc.deposit(500);
         newAcc.withdraw(500);
         List<Transaction> history = newAcc.getTransactionHistory();
-        System.out.println(kenSama
+        System.out.println(manager
               .filterTransactionsAbove(500, history)); //tc12
         
         String expectedOutput =
                 "[Deposit: Php1000.0., Deposit: Php500.0., Withdraw: Php500.0.]";
         String actualOutput = outContent.toString().trim();
         assertTrue(actualOutput.contains(expectedOutput));
-//        assertEquals(expectedOutput,
-//                actualOutput,  "Output strings should match");
+    }
+    
+    @Test
+    void checkHistory_DisplayTransactionHistoryWithZeroAsFilter_ErrorMessage() {
+        newAcc.deposit(1000);
+        newAcc.deposit(500);
+        newAcc.withdraw(500);
+        List<Transaction> history = newAcc.getTransactionHistory();
+        Exception thrown = assertThrows(
+                Exception.class,
+                () -> System.out.println(manager
+                        .filterTransactionsAbove(0, history)),
+                "Non-existent Account"
+         );
+         assertTrue(thrown.getMessage().contains("Cannot use 0 as an amount."));
+    }
+    
+    @Test
+    void checkHistory_DisplayTransactionHistoryWithNegativeAsFilter_ErrorMessage() {
+        newAcc.deposit(1000);
+        newAcc.deposit(500);
+        newAcc.withdraw(500);
+        List<Transaction> history = newAcc.getTransactionHistory();
+        Exception thrown = assertThrows(
+                Exception.class,
+                () -> System.out.println(manager
+                        .filterTransactionsAbove(-1, history)),
+                "Non-existent Account"
+         );
+         assertTrue(thrown.getMessage().contains("Cannot use a negative amount."));
     }
     
     @Test
@@ -167,7 +204,7 @@ class AppTest {
         newAcc.deposit(500);
         newAcc.withdraw(400);
         List<Transaction> history = newAcc.getTransactionHistory();
-        kenSama.sortTransactionsByAmount(history); //tc13
+        manager.sortTransactionsByAmount(history); //tc13
         history.forEach(System.out::println);
         
         String expectedOutput =
@@ -184,9 +221,14 @@ class AppTest {
     void checkNullPointer_GetInvalidAccount_ErrorMessage() {
         Exception thrown = assertThrows(
                 Exception.class,
-                () -> kenSama.getAccount(2), //tc14
+                () -> manager.getAccount(2), //tc14
                 "Non-existent Account"
          );
          assertTrue(thrown.getMessage().contains("User at 2 does not exist."));
+    }
+    
+    @Test
+    void checkmain() {
+        App.main(null);
     }
 }
