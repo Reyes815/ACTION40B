@@ -1,5 +1,7 @@
 package bank;
 
+import java.util.List;
+
 public interface BankAccount {
     /**
      *
@@ -18,7 +20,13 @@ public interface BankAccount {
     double getBalance();
     /**
      *
-     * @return boolean value
+     * @return boolean value if bank account is frozen
      */
     boolean isFrozen();
+    /**
+     * Used for transaction history and organization.
+     * @return transaction list
+     */
+    List<Transaction> getTransactionHistory();
+
 }

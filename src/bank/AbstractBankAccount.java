@@ -1,5 +1,8 @@
 package bank;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class AbstractBankAccount implements BankAccount {
     /**
      * current balance amount.
@@ -9,6 +12,10 @@ public abstract class AbstractBankAccount implements BankAccount {
      * check if account is frozen.
      */
     private boolean isFrozen;
+    /**
+     * transaction list.
+     */
+    private List<Transaction> transactionHistory = new ArrayList<Transaction>();
 
     AbstractBankAccount() {
         this.balance = 0;
@@ -16,9 +23,9 @@ public abstract class AbstractBankAccount implements BankAccount {
     }
 
     /**
-     * freezes bank account.
+     * freezes current bank account.
      */
-    public final void freezeAccount() {
+    public void freezeAccount() {
         this.isFrozen = true;
         System.out.println("Account has been frozen.");
     }
@@ -34,33 +41,52 @@ public abstract class AbstractBankAccount implements BankAccount {
     @Override
     public final void deposit(final double amount) {
         if (!this.isFrozen) {
-            if (amount <= 0) {
-                System.out.println("The deposit amount must be positive");
+            if (amount == 0) {
+                throw new InvalidAmountException(
+                        "Deposit with zero amount.");
+            } else if (amount < 0) {
+                throw new InvalidAmountException(
+                        "Deposit with negative amount.");
             } else {
                 this.balance = this.getBalance() + amount;
+                Transaction transac =
+                        new Transaction("Deposit", amount);
+                transactionHistory.add(transac);
                 System.out.println("Deposit: Php " + this.getBalance() + ".");
             }
         } else {
-            System.out.println("Account is frozen.");
-            System.out.println("Cannot deposit.");
+            throw new AccountFrozenException("Deposit when account is frozen.");
         }
     }
 
     @Override
     public final void withdraw(final double amount) {
         if (!this.isFrozen) {
-            if (amount <= 0) {
-                System.out.println("The withdrawn amount must be positive.");
+            if (amount == 0) {
+                throw new InvalidAmountException(
+                        "Withdraw with zero amount.");
+            } else if (amount < 0) {
+                throw new InvalidAmountException(
+                        "Withdraw with negative amount.");
             } else if (this.getBalance() < amount) {
-                System.out.println("Insufficient balance.");
+                throw new InsufficientFundsException(
+                        "Withdraw with insufficient funds.");
             } else {
                 this.balance = this.getBalance() - amount;
+                Transaction transac =
+                        new Transaction("Withdraw", amount);
+                transactionHistory.add(transac);
                 System.out.println("Withdrawn: Php " + amount + ".");
             }
         } else {
-            System.out.println("Account is frozen.");
-            System.out.println("Cannot withdraw.");
+            throw new AccountFrozenException(
+                    "Withdraw when account is frozen.");
         }
+    }
+
+    @Override
+    public final List<Transaction> getTransactionHistory() {
+        return this.transactionHistory;
     }
 
     @Override
@@ -74,7 +100,7 @@ public abstract class AbstractBankAccount implements BankAccount {
     }
 
     /**
-     * for testing purposes.
+     * Clear user balance on bank account.
      */
     public final void clearBalance() {
         this.balance = 0;
